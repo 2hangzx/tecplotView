@@ -1,5 +1,7 @@
 # Tecplot 数据可视化工具
 
+Python 分支增加了独立的 [`python/`](python/) 包，支持桌面界面、命令行、Python API 和自定义色标上下限。安装、运行及与 MATLAB 的逐项对应见 [Python 使用说明](python/README.md)。
+
 MATLAB 实现位于 [`matlab/`](matlab/)，包含 Tecplot ASCII 数据读取、交互查看、命令行绘图、自定义色标范围及图片导出。
 
 ## 快速运行
@@ -19,6 +21,7 @@ run_demo
 tecplot/
 ├── README.md
 ├── .gitignore
+├── python/             Python 包、桌面界面、CLI、测试和安装说明
 └── matlab/
     ├── *.m             MATLAB 读取、绘图和界面入口
     ├── README.md       详细使用说明

@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tecplot-dat-viewer"
+version = "0.1.0"
+description = "Read and visualize ordered Tecplot ASCII/PIV data with a Python API, CLI and desktop viewer"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24,<3", "matplotlib>=3.8,<4"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "build>=1,<2"]
+
+[project.scripts]
+tecplot-viewer = "tecplot_viewer.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+tecplot_viewer = ["data/*.dat"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["gui: requires a working Tk installation and desktop display"]

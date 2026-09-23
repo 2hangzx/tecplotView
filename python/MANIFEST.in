@@ -1,0 +1,6 @@
+include run_demo.py build_examples.py
+include requirements-tested.txt
+include VALIDATION.md
+recursive-include tests *.py
+recursive-include validation *.py *.m
+recursive-include src/tecplot_viewer/data *.dat
