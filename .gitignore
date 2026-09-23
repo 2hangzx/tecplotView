@@ -1,0 +1,15 @@
+# MATLAB editor / runtime artifacts
+*.asv
+*.m~
+*.log
+matlab_crash_dump*
+java.log*
+
+# Generated renderings (recreated with matlab/build_examples.m)
+/matlab/output/
+/matlab/velocity.png
+/matlab/vorticity.png
+
+# Desktop metadata
+.DS_Store
+Thumbs.db
