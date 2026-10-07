@@ -23,6 +23,8 @@ def parser():
     gui = commands.add_parser("gui", help="Open the desktop viewer")
     gui.add_argument("file", nargs="?", type=Path)
     gui.add_argument("--demo", action="store_true", help="Load synthetic PIV data")
+    gui.add_argument("--folder", type=Path, help="Browse a DAT file collection (does not imply a time series)")
+    gui.add_argument("--recursive", action="store_true", help="Include subdirectories when scanning --folder")
     inspect = commands.add_parser("inspect", help="Validate and describe a DAT file")
     inspect.add_argument("file", type=Path)
     inspect.add_argument("--json", action="store_true", help="Print machine-readable metadata")
@@ -53,13 +55,15 @@ def main(argv=None) -> int:
     args = parser().parse_args(argv)
     try:
         if args.command == "gui":
-            if args.demo and args.file:
-                raise ValueError("Choose a file or --demo, not both.")
+            if sum((bool(args.demo), args.file is not None, args.folder is not None)) > 1:
+                raise ValueError("Choose a file, --demo, or --folder.")
+            if args.recursive and args.folder is None:
+                raise ValueError("--recursive requires --folder.")
             try:
                 from .gui import TecplotViewer
             except ImportError as exc:
                 raise ValueError("GUI requires Python with tkinter/Tcl/Tk; headless plot does not.") from exc
-            app = TecplotViewer(demo_dataset() if args.demo else args.file)
+            app = TecplotViewer(demo_dataset() if args.demo else args.file, folder=args.folder, recursive=args.recursive)
             app.run()
         elif args.command == "demo":
             print(make_demo_dat(args.file, overwrite=args.overwrite))

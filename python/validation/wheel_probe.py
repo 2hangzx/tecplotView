@@ -19,5 +19,24 @@ app = TecplotViewer(sample, visible=False)
 try:
     app.canvas.draw()
     assert app.result.info["scalar_name"] == "Velocity(m/s)"
+    collection = work / "collection"
+    collection.mkdir()
+    import shutil
+    for name in ("file2.dat", "file10.DAT"):
+        shutil.copyfile(sample, collection / name)
+    assert [item.relative_path for item in tecplot_viewer.scan_dat(collection).files] == ["file2.dat", "file10.DAT"]
+    app.scan_folder(collection)
+    while app._scan_id is not None:
+        app.root.update()
+    assert app.sequence.current is None
+    assert app.load_item(app.sequence.ordered()[0])
+    app.freeze_button.invoke()
+    limits = app.result.info["clim"]
+    app.step_file()
+    assert app.sequence.current == "file10.DAT"
+    assert app.result.info["clim"] == limits
+    app.loop.set(True)
+    app.play()
+    assert app._play_id is not None
 finally:
     app.close()

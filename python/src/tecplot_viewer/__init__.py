@@ -6,6 +6,7 @@ from .tecplot_variable import tecplot_variable
 from .tecplot_plot import tecplot_plot, PlotResult
 from .tecplot_cli import tecplot_cli
 from .make_demo_dat import make_demo_dat, demo_dataset
+from .scan_dat import scan_dat, ScanResult, DatFile
 
 __version__ = "0.1.0"
 
@@ -18,4 +19,4 @@ def tecplot_viewer(filename=None, **kwargs):
 
 __all__ = ["Dataset", "Zone", "TecplotError", "PlotResult", "read_tecplot_dat",
            "tecplot_variable", "tecplot_grid", "tecplot_plot", "tecplot_cli",
-           "tecplot_viewer", "make_demo_dat", "demo_dataset"]
+           "tecplot_viewer", "make_demo_dat", "demo_dataset", "scan_dat", "ScanResult", "DatFile"]

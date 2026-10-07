@@ -66,3 +66,9 @@ def test_headless_import_does_not_load_tk(tmp_path):
     result = subprocess.run([sys.executable, "-c", "import sys; import tecplot_viewer; assert 'tkinter' not in sys.modules"],
                             cwd=tmp_path, capture_output=True, text=True)
     assert result.returncode == 0, result.stderr
+
+
+def test_folder_cli_help_and_conflicting_sources(tmp_path):
+    assert "--folder" in command("gui", "--help").stdout
+    assert command("gui", "--demo", "--folder", tmp_path).returncode == 2
+    assert command("gui", "--recursive").returncode == 2
